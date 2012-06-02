@@ -1,13 +1,10 @@
 note
 	description: "Storage for persistent objects"
-	date: "$Date$"
-	revision: "$Revision$"
+	date: "$Date: $"
+	revision: "$Revision: $"
 
-class
+deferred class
 	OBS_REPOSITORY
-
-create
-	make
 
 feature {NONE} -- Creation
 
@@ -20,6 +17,21 @@ feature {NONE} -- Creation
 		end
 
 feature -- Access
+
+	new_data_id: NATURAL_64
+			-- A new (previously unassigned) value for use as a data_id in an OBS_STORABLE
+			--| Violates CQS to simplify atomic assignment in a multi-threaded environment
+		do
+			Result := last_assigned_data_id + 1
+			last_assigned_data_id := Result
+		ensure
+			result_incremented: Result > old last_assigned_data_id
+		end
+
+	has (a_data_id: like new_data_id): BOOLEAN
+			-- Is an object with `a_data_id' persisted within Current?
+		deferred
+		end
 
 feature -- Basic Operations
 
@@ -47,6 +59,11 @@ feature -- Basic Operations
 		end
 
 feature {NONE} -- Implementation
+
+	last_assigned_data_id: NATURAL_64
+			-- The previously assigned `data_id'
+		attribute
+		end
 
 	is_metadata_dirty: BOOLEAN
 			-- Has metadata about Current changed since the last save?

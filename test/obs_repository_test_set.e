@@ -19,7 +19,7 @@ feature -- Tests
 	test_persistent_type_code
 			-- Test feature `persistent_type_code'
 		local
-			l_repository: OBS_REPOSITORY
+			l_repository: OBS_FILE_REPOSITORY
 			l_existing_codes: ARRAYED_LIST [INTEGER]
 			l_string_32: READABLE_STRING_32
 			l_immutable_string: IMMUTABLE_STRING_32

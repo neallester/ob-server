@@ -16,9 +16,12 @@ feature {NONE} -- Initialization
 
 	make
 			-- Run application.
+		local
+			l_repository: OBS_REPOSITORY
 		do
 			--| Add your code here
 			print ("Hello Eiffel World!%N")
+			create l_repository.make
 		end
 
 end
