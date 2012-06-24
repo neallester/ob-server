@@ -24,6 +24,7 @@ feature -- Access
 		do
 			Result := last_assigned_data_id + 1
 			last_assigned_data_id := Result
+			persist_data_id
 		ensure
 			result_incremented: Result > old last_assigned_data_id
 		end
@@ -50,6 +51,7 @@ feature -- Basic Operations
 				persistent_type_by_name.put (Result, internal.type_name_of_type (l_dynamic_type))
 				dynamic_type_by_persistent_type.put (l_dynamic_type, Result)
 				persistent_type_by_dynamic_type.put (Result, l_dynamic_type)
+				persist_repository
 			end
 		ensure
 			valid_result: Result > 0
@@ -58,15 +60,20 @@ feature -- Basic Operations
 			dynamic_type_by_persistent_type_has: dynamic_type_by_persistent_type.item (Result) = internal.dynamic_type (a_object)
 		end
 
-feature {NONE} -- Implementation
+feature {OBS_TEST_SET_HELPER} -- Implementation
+
+	persist_data_id
+			-- Persist `last_assigned_data_id' to storage medium
+		deferred
+		end
+
+	persist_repository
+			-- Persist Current to storage medium
+		deferred
+		end
 
 	last_assigned_data_id: NATURAL_64
 			-- The previously assigned `data_id'
-		attribute
-		end
-
-	is_metadata_dirty: BOOLEAN
-			-- Has metadata about Current changed since the last save?
 
 	last_persistent_type_code_assigned: INTEGER
 			-- The previously assigned persistent type code

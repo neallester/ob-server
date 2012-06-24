@@ -30,7 +30,7 @@ feature -- Tests
 			l_string_list: ARRAYED_LIST [STRING]
 			l_string_code, l_immutable_string_code, l_boolean_code, l_tuple_1_code, l_tuple_2_code, l_string_list_code, l_integer_list_code: INTEGER
 		do
-			create l_repository.make
+			create l_repository.make_with_location (execution_environment.current_working_directory)
 			create l_existing_codes.make (10)
 			l_string_32 := ("String1").as_string_32
 			l_string_code := l_repository.persistent_type_code (l_string_32)
@@ -65,6 +65,14 @@ feature -- Tests
 			assert ("immutable_string code same", l_immutable_string_code = l_repository.persistent_type_code (l_string_32))
 			l_string_32 := ("String10").as_string_32
 			assert ("string code same", l_string_code = l_repository.persistent_type_code (("String2").as_string_32))
+		end
+
+feature {NONE} -- Test Support
+
+	execution_environment: EXECUTION_ENVIRONMENT
+			-- Environment in which test is executed
+		once
+			create Result
 		end
 
 end
