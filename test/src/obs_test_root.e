@@ -1,4 +1,4 @@
-note
+	note
 	description: "Root class for test project"
 	date: "$Date: $"
 	revision: "$Revision: $"
