@@ -13,7 +13,7 @@
 		<cluster name="test" location="test\" recursive="true"/>
 	</target>
 	<target name="test" extends="ob-server">
-		<root cluster="test" class="OSV_TEST_ROOT" feature="make"/>
+		<root class="OBS_TEST_ROOT" feature="make"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
 		<cluster name="test" location="test\" recursive="true"/>
 	</target>
