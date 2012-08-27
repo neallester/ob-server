@@ -60,6 +60,28 @@ feature -- Basic Operations
 			dynamic_type_by_persistent_type_has: dynamic_type_by_persistent_type.item (Result) = internal.dynamic_type (a_object)
 		end
 
+	load_type_cross_reference (a_type_cross_reference: like type_cross_reference)
+			-- Load repoistory parameters from `a_type_cross_reference'
+		local
+			l_lines, l_entries: LIST [STRING]
+			l_class_name: STRING
+			l_persistent_type, l_dynamic_type: INTEGER
+		do
+			make
+			l_lines := a_type_cross_reference.split ('%N')
+			across l_lines as ic_lines loop
+				if not ic_lines.item.is_empty then
+					l_entries := ic_lines.item.split (',')
+					l_class_name := l_entries.i_th (1)
+					l_persistent_type := l_entries.i_th (2).to_integer
+					l_dynamic_type := l_entries.i_th (3).to_integer
+					persistent_type_by_name.put (l_persistent_type, l_class_name)
+					dynamic_type_by_persistent_type.put (l_dynamic_type, l_persistent_type)
+					persistent_type_by_dynamic_type.put (l_persistent_type, l_dynamic_type)
+				end
+			end
+		end
+
 feature {OBS_TEST_SET_HELPER} -- Implementation
 
 	persist_data_id

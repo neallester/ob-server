@@ -74,7 +74,7 @@ feature -- Tests
 			l_known_list: ARRAYED_LIST [TUPLE [class_name: STRING; persistent_type: INTEGER; dynamic_type: INTEGER]]
 			l_known_item: TUPLE [class_name: STRING; persistent_type: INTEGER; dynamic_type: INTEGER]
 			l_internal: INTERNAL
-			l_string: STRING
+			l_type_cross_reference, l_string: STRING
 			l_integer: INTEGER
 			l_lines, l_entries: LIST [STRING]
 		do
@@ -85,9 +85,10 @@ feature -- Tests
 			l_known_list.extend ([l_string.generating_type.name.as_string_8, l_repository.persistent_type_code (l_string), l_internal.type_of (l_string).type_id])
 			l_known_list.extend ([l_integer.generating_type.name.as_string_8, l_repository.persistent_type_code (l_integer), l_internal.type_of (l_integer).type_id])
 			l_known_list.extend ([l_internal.generating_type.name.as_string_8, l_repository.persistent_type_code (l_internal), l_internal.type_of (l_internal).type_id])
-			l_lines := l_repository.type_cross_reference.split ('%N')
+			l_type_cross_reference := l_repository.type_cross_reference
+			l_lines := l_type_cross_reference.split ('%N')
 			across l_lines as ic_lines loop
-				if not ic_lines.item.is_empty then
+				if not ic_lines.item.is_empty	 then
 					l_known_item := l_known_list.i_th (ic_lines.cursor_index)
 					l_entries := ic_lines.item.split (',')
 					assert ("class_same_string" + ic_lines.cursor_index.out, l_entries.i_th (1).same_string (l_known_item.class_name))
@@ -95,6 +96,8 @@ feature -- Tests
 					assert ("dynamic_type" + ic_lines.cursor_index.out, l_entries.i_th (3).to_integer = l_known_item.dynamic_type)
 				end
 			end
+			l_repository.load_type_cross_reference (l_type_cross_reference)
+			assert ("type_cross_reference loaded correctly", l_type_cross_reference.same_string (l_repository.type_cross_reference))
 		end
 
 feature {NONE} -- Test Support
