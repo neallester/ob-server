@@ -93,6 +93,29 @@ feature {OBS_TEST_SET_HELPER} -- Implementation
 	persistent_type_by_name: HASH_TABLE [INTEGER, STRING]
 			-- Persistent type codes in the repository, indexed by their class name
 
+	type_cross_reference: STRING
+			-- A cross reference of the contents of class name, persistent type code, and dynamic type code
+			-- in comma separated format: class_name,persistent_type_code,dynamic_type_code
+		local
+			l_persistent_type_code: INTEGER
+		do
+			Result := ""
+			from
+				persistent_type_by_name.start
+			until
+				persistent_type_by_name.after
+			loop
+				Result.append (persistent_type_by_name.key_for_iteration + ",")
+				l_persistent_type_code := persistent_type_by_name.item_for_iteration
+				Result.append (l_persistent_type_code.out + ",")
+				if l_persistent_type_code > last_persistent_type_code_assigned then
+					last_persistent_type_code_assigned := l_persistent_type_code
+				end
+				Result.append (dynamic_type_by_persistent_type.item (l_persistent_type_code).out + "%N")
+				persistent_type_by_name.forth
+			end
+		end
+
 	internal: INTERNAL
 			-- Access to class INTERNAL
 		once
