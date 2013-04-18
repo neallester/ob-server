@@ -6,6 +6,6 @@ note
 class
 	OBS_SEGMENT
 
--- A segment edited on the mac to introduce a conflict.
+-- A segment edited in windows to create a conflict.
 
 end
