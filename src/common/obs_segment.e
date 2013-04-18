@@ -6,6 +6,6 @@ note
 class
 	OBS_SEGMENT
 
--- A segment
+-- A segment and this will be a conflict.
 
 end
