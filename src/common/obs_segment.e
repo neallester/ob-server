@@ -6,4 +6,6 @@ note
 class
 	OBS_SEGMENT
 
+-- A segment
+
 end
