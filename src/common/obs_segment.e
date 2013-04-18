@@ -6,6 +6,10 @@ note
 class
 	OBS_SEGMENT
 
+<<<<<<< HEAD
 -- A segment and this will be a conflict.
+=======
+-- A segment; yet again
+>>>>>>> 90ea34de9fa100e5f767ebe3620d0f6b2041de5d
 
 end
