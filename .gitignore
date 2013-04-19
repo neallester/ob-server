@@ -164,5 +164,6 @@ pip-log.txt
 
 #emacs temp files
 *.*~
-\#*
+[#]*[#]
+.\#*
 
