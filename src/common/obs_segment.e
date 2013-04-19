@@ -6,6 +6,6 @@ note
 class
 	OBS_SEGMENT
 
--- A segment edited in windows to create another conflict.
+-- A segment edited in windows to create yet another conflict.
 
 end
